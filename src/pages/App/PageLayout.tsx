@@ -13,9 +13,14 @@ const HeaderStyled = styled.div`
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04),
     0px 0px 1px rgba(0, 0, 0, 0.04);
   padding: 20px 110px 19px 110px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+  .wrapper-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1160px;
+    margin: auto;
+  }
 `
 
 const MenuStyled = styled.div`
@@ -31,12 +36,17 @@ const MenuStyled = styled.div`
   }
 `
 
+const PageContent = styled.div`
+  margin:auto;
+  max-width: 1160px;
+`
+
 const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
   const { children } = props
 
   const Menu = () => {
     return (
-      <MenuStyled>
+      <MenuStyled className="font-kanit">
         <ul>
           <li>สินค้าใหม่</li>
           <li>สินค้าขายดี</li>
@@ -62,15 +72,17 @@ const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
   return (
     <div>
       <HeaderStyled>
-        <div className="flex items-center">
-          <BookLogo />
-          <Menu />
-        </div>
-        <div>
-          <MenuRight />
+        <div className='wrapper-header'>
+          <div className="flex items-center">
+            <BookLogo />
+            <Menu />
+          </div>
+          <div>
+            <MenuRight />
+          </div>
         </div>
       </HeaderStyled>
-      <div>{children}</div>
+      <PageContent>{children}</PageContent>
     </div>
   )
 }
