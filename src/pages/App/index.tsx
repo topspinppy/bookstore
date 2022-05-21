@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
+import Cart from '../Cart/Cart';
 import MainPage from '../MainPage/MainPage';
 import ViewProduct from '../ViewProduct/ViewProduct';
 
@@ -12,7 +13,7 @@ const App: React.FC = (): React.ReactElement => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/product/detail/:id" element={<ViewProduct />} />
-          <Route path="/cart" element={<div>Cart</div>} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<div>checkout</div>} />
           <Route path="/payment" element={<div>Payment</div>} />
         </Routes>

@@ -1,12 +1,12 @@
 import React from "react"
 import { WhiteHeartIcon } from "../../assets/icon"
 import SocialLogo from "../../assets/logo/SocialLogo"
-import { Button } from "../../components"
+import { Button, Card, InputNumber, ListItem, Tab } from "../../components"
 import PreviewProduct from "./PreviewProduct"
 
 const ViewProduct: React.FC = (): React.ReactElement => {
   return (
-    <>
+    <div className="flex flex-col">
       <div className="flex mt-14">
         <div className="flex-auto w-9">
           <PreviewProduct
@@ -43,7 +43,10 @@ const ViewProduct: React.FC = (): React.ReactElement => {
             </div>
 
             <div className="mt-16 flex font-poppins">
-              <Button varient="primary" className="mr-10">Add</Button>
+              <InputNumber width="102px" className="mr-9"/>
+              <Button varient="primary" className="mr-10">
+                Add
+              </Button>
               <Button varient="warning">
                 <div className="flex justify-evenly">
                   <WhiteHeartIcon />
@@ -58,7 +61,14 @@ const ViewProduct: React.FC = (): React.ReactElement => {
           </div>
         </div>
       </div>
-    </>
+      <div className="mt-8">
+        <Tab />
+      </div>
+
+      <div className="mt-32 mb-32">
+        <Card title="สินค้าที่เกี่ยวข้อง" extra="ดูสินค้าทั้งหมด" children={<ListItem />} />
+      </div>
+    </div>
   )
 }
 

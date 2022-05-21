@@ -7,28 +7,47 @@ const template = {
   white: '#FFFFFF'
 }
 interface IButtonProps {
-  varient?: "outline" | "primary" | "warning",
+  varient?: "outline" | "primary" | "warning" | "link",
   children: React.ReactNode,
-  className?: string
+  className?: string,
+  block?: boolean,
+  dark?: boolean,
+  width?: string,
+  height?: string,
+  onClick?: React.ButtonHTMLAttributes<HTMLButtonElement>["onClick"],
 }
 
 const ButtonStyled = styled.button<IButtonProps>`
-  ${({ varient }) => {
+  ${({ block }) => block === true && `
+    width: 100% !important;
+    height: 50px;
+  ` }
+  ${({ varient, dark, width, height }) => {
     if (varient === 'primary') {
       return `
-        color: ${template.white};
-        background: ${template.primary};
-        width: 209px;
-        height: 50px;
+        ${dark ? `
+          color: ${template.white};
+          background: ${template.primaryDark};
+        ` : `
+          color: ${template.white};
+          background: ${template.primary};
+        `} 
+        width: ${ width ? width : '209px'};
+        height: ${ height ? height : '50px'};
         border-radius: 50px;
       `
     }
     if (varient === 'outline') {
       return `
-        color: ${template.primary};
-        border: 2px solid ${template.primary};
-        width: 209px;
-        height: 50px;
+        ${dark ? `
+          color: ${template.primaryDark};
+          border: 2px solid ${template.primaryDark};
+        ` : `
+          color: ${template.primary};
+          border: 2px solid ${template.primary};
+        `} 
+        width: ${ width ? width : '209px'};
+        height: ${ height ? height : '50px'};
         border-radius: 50px;
       `
     }
@@ -36,9 +55,18 @@ const ButtonStyled = styled.button<IButtonProps>`
       return `
         color: ${template.white};
         background: ${template.warning};
-        width: 209px;
-        height: 50px;
+        width: ${ width ? width : '209px'};
+        height: ${ height ? height : '50px'};
         border-radius: 50px;
+      `
+    }
+
+    if (varient === 'link') {
+      return `
+        color: ${template.primary};
+        border-color: transparent;
+        background: 0 0;
+        box-shadow: none;
       `
     }
   }}
@@ -47,9 +75,9 @@ const ButtonStyled = styled.button<IButtonProps>`
 const Button: React.FC<IButtonProps> = (props) => {
   const { varient = "primary", children } = props
   return (
-    <div>
+    <>
       <ButtonStyled varient={varient} {...props}>{children}</ButtonStyled>
-    </div>
+    </>
   )
 }
 
