@@ -1,10 +1,15 @@
 import React from "react"
+import { useRecoilValue } from "recoil";
+
 import { WhiteHeartIcon } from "../../assets/icon"
 import SocialLogo from "../../assets/logo/SocialLogo"
 import { Button, Card, InputNumber, ListItem, Tab } from "../../components"
+import { mockProductState } from "../../recoil/atoms/mockProductState";
 import PreviewProduct from "./PreviewProduct"
 
 const ViewProduct: React.FC = (): React.ReactElement => {
+  const mockProduct = useRecoilValue(mockProductState)
+
   return (
     <div className="flex flex-col">
       <div className="flex mt-14">
@@ -66,7 +71,15 @@ const ViewProduct: React.FC = (): React.ReactElement => {
       </div>
 
       <div className="mt-32 mb-32">
-        <Card title="สินค้าที่เกี่ยวข้อง" extra="ดูสินค้าทั้งหมด" children={<ListItem />} />
+        <Card 
+          title="สินค้าที่เกี่ยวข้อง" 
+          extra="ดูสินค้าทั้งหมด" 
+          children={(
+            <ListItem 
+              items={mockProduct}
+            />
+          )} 
+        />
       </div>
     </div>
   )

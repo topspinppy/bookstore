@@ -29,13 +29,15 @@ interface IListItemCard {
   originPrice: string
   discountPrice: string
   key?: number
+  onChange(value: any): void
 }
 
 const ListItemCard: React.FC<IListItemCard> = (props) => {
-  const { image, name, originPrice, discountPrice } = props
-  const cardContent = () => {
+  const { id, image, name, originPrice, discountPrice, onChange } = props
+  const cardContent = (isOverlay = false) => {
     return (
       <>
+        { isOverlay && <div onClick={() => onChange(id)}>Add To Card</div> }
         <div
           className="flex items-center ml-6 text-xs pt-2 pl-2 pb-2 font-kanit"
           style={{ color: "#78A962" }}
@@ -68,7 +70,7 @@ const ListItemCard: React.FC<IListItemCard> = (props) => {
   return (
     <>
       <ListContainer>
-        <div className="overlay">{cardContent()}</div>
+        <div className="overlay">{cardContent(true)}</div>
         <>
           {cardContent()}
         </>
