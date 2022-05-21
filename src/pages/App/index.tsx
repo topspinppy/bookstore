@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Cart from '../Cart/Cart';
 import MainPage from '../MainPage/MainPage';
+import Payment from '../Payment/Payment';
 import ViewProduct from '../ViewProduct/ViewProduct';
 
 import PageLayout from './PageLayout'
@@ -14,8 +15,7 @@ const App: React.FC = (): React.ReactElement => {
           <Route path="/" element={<MainPage />} />
           <Route path="/product/detail/:id" element={<ViewProduct />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<div>checkout</div>} />
-          <Route path="/payment" element={<div>Payment</div>} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </PageLayout>
     </div>

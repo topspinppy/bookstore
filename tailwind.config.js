@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'kanit': ['Kanit', 'sans-serif'],
+        'kanit': ['Noto Sans Thai', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif']
       }
     },

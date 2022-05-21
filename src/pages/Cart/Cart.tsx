@@ -1,17 +1,10 @@
 import React from "react"
-import styled from "@emotion/styled"
+import { useNavigate } from "react-router-dom";
 import { Button, CartTable } from "../../components"
-
-const OrderSummaryStyled = styled.div`
-  background: #f5f9ff;
-  padding-top: 17.51px;
-
-  .title {
-    margin-left: 24px;
-  }
-`
+import OrderSummary from "./OrderSummary";
 
 const Cart: React.FC = (): React.ReactElement => {
+  const navigate = useNavigate();
   return (
     <div>
       <p className="font-kanit mt-14 font-semibold text-3xl">ตระกร้าสินค้า</p>
@@ -25,6 +18,7 @@ const Cart: React.FC = (): React.ReactElement => {
               width="200px"
               height="37px"
               dark
+              onClick={() => navigate('/')}
             >
               ซื้อสินค้าต่อไป
             </Button>
@@ -40,32 +34,7 @@ const Cart: React.FC = (): React.ReactElement => {
           </div>
         </div>
         <div className="flex-auto w-1/5">
-          <OrderSummaryStyled className="font-kanit">
-            <p className="title font-kanit text-2xl font-semibold mb-6">
-              สรุปคำสั่งซื้อ
-            </p>
-
-            <div className="ml-6 mr-6 font-semibold">
-              <div className="flex justify-between mb-4">
-                <span>ยอดรวม</span>
-                <span>THB499.00</span>
-              </div>
-              <div className="flex justify-between">
-                <span>ค่าส่ง</span>
-                <span>THB1.00</span>
-              </div>
-            </div>
-            <hr className="ml-6 mr-6 mb-6 mt-6" />
-            <div className="ml-6 mr-6 font-semibold mb-6">
-              <div className="flex justify-between mb-4">
-                <span>ยอดรวม</span>
-                <span>THB499.00</span>
-              </div>
-            </div>
-            <div className="ml-6 mr-6 pb-10">
-              <Button block>ไปชำระเงิน</Button>
-            </div>
-          </OrderSummaryStyled>
+          <OrderSummary />
         </div>
       </div>
     </div>

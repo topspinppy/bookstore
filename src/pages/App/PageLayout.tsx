@@ -1,8 +1,12 @@
 import React from 'react'
+import { Badge } from 'antd'
+import { Popover } from 'antd'
 import styled from '@emotion/styled'
 import { MagnifierIcon, CartIcon } from '../../assets/icon'
 import BookLogo from '../../assets/logo/BookLogo'
-import { Badge } from '../../components'
+import { Button } from '../../components'
+import { useNavigate } from 'react-router-dom'
+import CartPopover from './CartPopover'
 
 interface IPageLayoutProps {
   children: React.ReactNode
@@ -36,6 +40,13 @@ const MenuStyled = styled.div`
   }
 `
 
+const PopOverStyled = styled(Popover)`
+  .ant-popover-inner-content {
+    padding: 0 !important;
+    color: rgba(0,0,0,.85);
+  }
+`
+
 const PageContent = styled.div`
   margin:auto;
   max-width: 1160px;
@@ -43,7 +54,7 @@ const PageContent = styled.div`
 
 const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
   const { children } = props
-
+  const navigate = useNavigate()
   const Menu = () => {
     return (
       <MenuStyled className="font-kanit">
@@ -63,8 +74,12 @@ const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
         <div className="mr-5">
           <MagnifierIcon />
         </div>
-        <Badge>
-          <CartIcon />
+        <Badge count="1"  size="small" color="geekblue">
+          <PopOverStyled content={<CartPopover />} trigger="click" placement="bottomRight">
+            <Button varient="link">
+              <CartIcon />
+            </Button>
+          </PopOverStyled>
         </Badge>
       </div>
     )
@@ -74,7 +89,9 @@ const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
       <HeaderStyled>
         <div className='wrapper-header'>
           <div className="flex items-center">
-            <BookLogo />
+            <Button varient='link' onClick={() => navigate('/')}>
+              <BookLogo />
+            </Button>
             <Menu />
           </div>
           <div>

@@ -46,14 +46,6 @@ const InputNumber: React.FC<IInputNumberProps> = ({ ...props }) => {
   return (
     <ContainerInputNumberStyled width={props.width} height={props.height}>
       <input type="number" min="1" defaultValue={1} ref={inputNumberRef} {...props} />
-      {/* <div className="flex step mt-0">
-        <Button varient="link" onClick={() => inputNumberRef.current.stepUp()} className="mb-3">
-          <StepUpIcon />
-        </Button>
-        <Button varient="link" onClick={() => inputNumberRef.current.stepDown()}>
-          <StepDownIcon />
-        </Button>
-      </div> */}
     </ContainerInputNumberStyled>
   )
 }
