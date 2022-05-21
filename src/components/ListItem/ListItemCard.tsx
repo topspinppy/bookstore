@@ -2,19 +2,16 @@ import { CheckIcon } from "../../assets/icon"
 import Rateing from "../Rateing"
 
 import styled from "@emotion/styled"
-import { useState } from "react"
 
 const ListContainer = styled.div`
   width: 230.16px;
   height: 301px;
   cursor: pointer;
   position: relative;
-  z-index: 1;
   .overlay {
     position: absolute;
-    opacity: 1;
+    opacity: 0;
     display: none;
-    z-index: 9999;
     background: white;
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     width: 234.73px;
@@ -35,10 +32,8 @@ interface IListItemCard {
 }
 
 const ListItemCard: React.FC<IListItemCard> = (props) => {
-  const { id, image, name, originPrice, discountPrice } = props
-  const [isMouseEnter, setIsMouseEnter] = useState(false)
-
-  const cardContent = (isEnhance = false) => {
+  const { image, name, originPrice, discountPrice } = props
+  const cardContent = () => {
     return (
       <>
         <div
@@ -51,7 +46,6 @@ const ListItemCard: React.FC<IListItemCard> = (props) => {
         <div className="ml-11 mr-11 mt-2">
           <img src={image} width="150px" height="150px" alt="" />
         </div>
-        { isEnhance && <>Add To Card</>}
         <div className="ml-7 flex items-center" style={{ marginTop: "10px" }}>
           <div className="mr-2">
             <Rateing />
@@ -73,11 +67,8 @@ const ListItemCard: React.FC<IListItemCard> = (props) => {
   }
   return (
     <>
-      <ListContainer
-        onMouseEnter={() => setIsMouseEnter(true)}
-        onMouseLeave={() => setIsMouseEnter(false)}
-      >
-        <div className="overlay">{cardContent(true)}</div>
+      <ListContainer>
+        <div className="overlay">{cardContent()}</div>
         <>
           {cardContent()}
         </>

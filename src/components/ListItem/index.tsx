@@ -64,19 +64,27 @@ const ListItem: React.FC<IListItemProps> = () => {
       onRequestChange={setActiveSlideIndex}
       itemsToShow={1}
       itemsToScroll={1}
+      innerProps={{
+        style: {
+          zIndex: 0
+        }
+      }}
       containerProps={{
         style: {
-          position: 'relative',
+          overflow: 'inherit',
           zIndex: 0
         }
       }}
       forwardBtnProps={{
         style: {
-          zIndex: '-999'
+          zIndex: '1'
         },
         children: <RightArrow />,
       }}
       backwardBtnProps={{
+        style: {
+          zIndex: '1'
+        },
         children: <LeftArrow />,
       }}
       responsiveProps={[
