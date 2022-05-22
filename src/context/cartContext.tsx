@@ -18,6 +18,9 @@ const Provider = ({ children }) => {
     addAdditionCart: (cart) => {
       dispatch({ type: ActionType.ADD_ADDITION_CART, payload: cart })
     },
+    clearCart: () => {
+      dispatch({ type: ActionType.CLEAR_CART, payload: [] })
+    },
     calculateShippingCart: (price) => {
       dispatch({
         type: ActionType.CALCULATE_SHIPPING_CART,

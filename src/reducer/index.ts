@@ -1,7 +1,7 @@
 // @ts-ignore
 
-import { ActionType } from "./action";
-import { product as productMock } from "./product";
+import { ActionType } from "./action"
+import { product as productMock } from "./product"
 
 export const initialState = {
   product: productMock,
@@ -10,9 +10,9 @@ export const initialState = {
 }
 
 export function reducer(state: any, action: any) {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
-    case ActionType.SET_CART: 
+    case ActionType.SET_CART:
       const id = payload.id
       const isOld = state.cart.map((product: any) => product.id).includes(id)
       let cartItems = null
@@ -21,7 +21,7 @@ export function reducer(state: any, action: any) {
           if (product.id === id) {
             return {
               ...product,
-              quantity: product.quantity + 1
+              quantity: product.quantity + 1,
             }
           }
           return product
@@ -30,11 +30,13 @@ export function reducer(state: any, action: any) {
       } else {
         cartItems = [...state.cart, { ...payload, quantity: 1 }]
       }
-      console.log('SET_CART')
+      console.log("SET_CART")
       return { ...state, cart: cartItems }
     case ActionType.ADD_ADDITION_CART:
       const currentId = payload.value.id
-      const currentProduct = state.cart.find((cart: any) => cart.id === currentId)
+      const currentProduct = state.cart.find(
+        (cart: any) => cart.id === currentId
+      )
       const newCurrentProduct = { ...currentProduct, quantity: payload.total }
       const productItems = state.cart.map((product: any) => {
         if (product.id === currentId) {
@@ -42,10 +44,12 @@ export function reducer(state: any, action: any) {
         }
         return product
       })
-      return {...state.cart, cart: productItems }
+      return { ...state.cart, cart: productItems }
     case ActionType.CALCULATE_SHIPPING_CART:
       const price = payload
-      return {...state, shippingPrice: price}
+      return { ...state, shippingPrice: price }
+    case ActionType.CLEAR_CART:
+      return { ...state, cart: [] }
     default:
       return state
   }

@@ -6,7 +6,7 @@ import OrderSummary from "./OrderSummary"
 
 const Cart: React.FC = (): React.ReactElement => {
   const navigate = useNavigate()
-  const { cart, addAdditionCart } = useContext(CartContext) as any
+  const { cart, addAdditionCart, clearCart } = useContext(CartContext) as any
   return (
     <div>
       <p className="font-kanit mt-14 font-semibold text-3xl">ตระกร้าสินค้า</p>
@@ -33,6 +33,7 @@ const Cart: React.FC = (): React.ReactElement => {
               width="200px"
               height="37px"
               dark
+              onClick={() => clearCart()}
             >
               ล้างตระกร้าสินค้า
             </Button>
