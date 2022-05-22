@@ -1,6 +1,10 @@
 import { SelectList } from "../../components"
 
-const PaymentTypeForm: React.FC = () => {
+interface IPaymentTypeFormProps {
+  onChange?(value: string | number): void
+}
+
+const PaymentTypeForm: React.FC<IPaymentTypeFormProps> = ({ onChange }) => {
   return (
     <div className="font-poppins">
       <SelectList 
@@ -24,6 +28,9 @@ const PaymentTypeForm: React.FC = () => {
             )
           }
         ]}
+        onChange={(data) => {
+          onChange && onChange(data)
+        }}
       />
     </div>
   )

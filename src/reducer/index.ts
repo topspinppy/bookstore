@@ -5,7 +5,8 @@ import { product as productMock } from "./product";
 
 export const initialState = {
   product: productMock,
-  cart: []
+  cart: [],
+  shippingPrice: 0,
 }
 
 export function reducer(state: any, action: any) {
@@ -41,8 +42,10 @@ export function reducer(state: any, action: any) {
         }
         return product
       })
-
       return {...state.cart, cart: productItems }
+    case ActionType.CALCULATE_SHIPPING_CART:
+      const price = payload
+      return {...state, shippingPrice: price}
     default:
       return state
   }

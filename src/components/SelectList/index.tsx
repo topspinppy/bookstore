@@ -28,13 +28,14 @@ const ItemContainer = styled.div`
 
 interface IItemsProps {
   value: string | number,
+  extra?: string | number,
   children: React.ReactNode
 }
 
 
 interface ISelectListProps {
   items: Array<IItemsProps>
-  onChange?(data: string | number): void;
+  onChange?(data: string | number, extra?: string | number): void;
 }
 
 const SelectList: React.FC<ISelectListProps> = ({ items, onChange }) => {
@@ -48,7 +49,7 @@ const SelectList: React.FC<ISelectListProps> = ({ items, onChange }) => {
         className="flex items-center pt-10 pb-10 pl-7 text-lg font-poppins cursor-pointer"
         onClick={() => {
           setTempIndex(index)
-          onChange && onChange(item?.value)
+          onChange && onChange(item?.value, item?.extra)
         }}
       >
         <CircleWrapper>

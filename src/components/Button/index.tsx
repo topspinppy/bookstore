@@ -49,6 +49,7 @@ const ButtonStyled = styled.button<IButtonProps>`
         width: ${ width ? width : '209px'};
         height: ${ height ? height : '50px'};
         border-radius: 50px;
+        background: white;
       `
     }
     if (varient === 'warning') {

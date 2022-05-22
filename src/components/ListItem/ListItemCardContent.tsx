@@ -1,6 +1,7 @@
 import { useContext } from "react"
-import { CheckIcon } from "../../assets/icon"
+import { CheckIcon, DescriptionIcon, FavoriteIcon } from "../../assets/icon"
 import { CartContext } from "../../context/cartContext"
+import Button from "../Button"
 import Rateing from "../Rateing"
 
 interface IListItemCardContent {
@@ -22,20 +23,31 @@ const ListItemCardContent: React.FC<IListItemCardContent> = (props) => {
   return (
     <>
       {isOverlay && (
-        <div
-          onClick={() => {
-            console.log(id)
-            handleAddToCart({
-              id,
-              name,
-              image,
-              originPrice,
-              discountPrice,
-            })
-          }}
-        >
-          Add To Card
-        </div>
+        <>
+          <div className="z-50 absolute left-48 top-5 " >
+            <FavoriteIcon />
+          </div>
+          <div className="z-50 absolute left-48 top-14">
+            <DescriptionIcon />
+          </div>
+          <Button
+            varient="outline"
+            width="160px"
+            height="34px"
+            className="z-50 absolute top-32 left-9 font-poppins" 
+            onClick={() => {
+              handleAddToCart({
+                id,
+                name,
+                image,
+                originPrice,
+                discountPrice,
+              })
+            }}
+          >
+            Add To Card
+          </Button>
+        </>
       )}
       <div
         className="flex items-center ml-6 text-xs pt-2 pl-2 pb-2 font-kanit"

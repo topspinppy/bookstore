@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { EditIcon, RemoveIcon } from "../../assets/icon"
 import { Button } from "../../components"
@@ -12,6 +12,18 @@ const CartPopoverStyled = styled.div`
 const CartPopover: React.FC = () => {
   const navigate = useNavigate()
   const { cart: carts } = useContext(CartContext) as any
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    const total = carts.reduce((previousValue: any, currentValue: any) => {
+      const price = currentValue.discountPrice
+        ? Number(currentValue.discountPrice)
+        : Number(currentValue.originPrice)
+      const quantity = Number(currentValue.quantity)
+      return +previousValue + price * quantity
+    }, 0)
+    setTotalPrice(total)
+  }, [carts])
 
 
   const productList = () => {
@@ -61,7 +73,7 @@ const CartPopover: React.FC = () => {
       <div className="mt-6 text-center">
         <div>
           <span className="text-sm mr-2">ยอดรวม</span>
-          <span className="text-lg font-semibold">THB499.00</span>
+          <span className="text-lg font-semibold">THB{totalPrice}.00</span>
         </div>
 
         <div className="mt-3 mb-5">
