@@ -1,23 +1,32 @@
-import React from "react"
-import { useRecoilValue } from "recoil";
+import React, { useContext } from "react"
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { WhiteHeartIcon } from "../../assets/icon"
 import SocialLogo from "../../assets/logo/SocialLogo"
 import { Button, Card, InputNumber, ListItem, Tab } from "../../components"
-import { mockProductState } from "../../recoil/atoms/mockProductState";
+import { CartContext } from "../../context/cartContext";
 import PreviewProduct from "./PreviewProduct"
 
 const ViewProduct: React.FC = (): React.ReactElement => {
-  const mockProduct = useRecoilValue(mockProductState)
+  const params = useParams()
+  const [quantity, setQuantity] = useState(0) as any
+  const { product, addToCart } = useContext(CartContext) as any
+  const productDetail = product.find((product: any) => product.id === Number(params.id))
 
+  const handleAddCard = (productDetail: any) => {
+    if (quantity > 0) {
+      addToCart({ ...productDetail, quantity })
+    }
+  }
   return (
     <div className="flex flex-col">
       <div className="flex mt-14">
         <div className="flex-auto w-9">
           <PreviewProduct
             images={[
-              "https://images-se-ed.com/ws/Storage/Originals/978616/184/9786161840488L.jpg?h=db11440ee68277bdf8468bc65e7f7c11",
-              "https://images-se-ed.com/ws/Storage/Illustration/978616/184/9786161840488-01.jpg?h=4ed8d71b53a43515f6cfcf67e30c81e0",
+              productDetail?.previewImage?.cover,
+              productDetail?.previewImage?.backCover,
             ]}
           />
         </div>
@@ -25,31 +34,38 @@ const ViewProduct: React.FC = (): React.ReactElement => {
           <div className="mt-5">
             <div>
               <p className="text-4xl font-kanit">
-                รสชาติของผลไม้ที่ยังไม่สุกงอม
+                {productDetail?.name}
               </p>
 
               <div className="mt-5 font-kanit">
                 <ul>
-                  <li>ผู้เขียน : โซนัมจู</li>
-                  <li>สำนักพิมพ์ : Piccolo</li>
-                  <li>หมวดหมู่ : วรรณกรรม เรื่องสั้น</li>
-                  <li>ประเภทของสินค้า : Books</li>
-                  <li>บาร์โค้ด : 9786161840488</li>
+                  <li>ผู้เขียน : {productDetail?.author}</li>
+                  <li>สำนักพิมพ์ : {productDetail?.press}</li>
+                  <li>หมวดหมู่ : {productDetail?.bookType}</li>
+                  <li>ประเภทของสินค้า : {productDetail?.productType}</li>
+                  <li>บาร์โค้ด : {productDetail?.barcode}</li>
                 </ul>
               </div>
 
               <div className="mt-20 flex items-center">
                 <span className="text-2xl mr-4 font-kanit">ราคา</span>
-                <span className="text-4xl font-semibold mr-3">THB499.00</span>
+                <span className="text-4xl font-semibold mr-3">THB{productDetail?.discountPrice}</span>
                 <span className="font-semibold text-neutral-500 line-through">
-                  THB599.00
+                  THB{productDetail?.originPrice}
                 </span>
               </div>
             </div>
 
             <div className="mt-16 flex font-poppins">
-              <InputNumber width="102px" className="mr-9"/>
-              <Button varient="primary" className="mr-10">
+              <InputNumber 
+                width="102px" 
+                className="mr-9" 
+                defaultValue={0}
+                onChange={(e) => {
+                  setQuantity(e.currentTarget.value)
+                }}
+              />
+              <Button varient="primary" className="mr-10" onClick={() => handleAddCard(productDetail)}>
                 Add
               </Button>
               <Button varient="warning">
@@ -76,7 +92,7 @@ const ViewProduct: React.FC = (): React.ReactElement => {
           extra="ดูสินค้าทั้งหมด" 
           children={(
             <ListItem 
-              items={mockProduct}
+              items={product}
             />
           )} 
         />

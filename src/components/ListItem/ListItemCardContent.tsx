@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { CheckIcon, DescriptionIcon, FavoriteIcon } from "../../assets/icon"
 import { CartContext } from "../../context/cartContext"
 import Button from "../Button"
@@ -16,12 +17,13 @@ interface IListItemCardContent {
 
 const ListItemCardContent: React.FC<IListItemCardContent> = (props) => {
   const { id, image, name, originPrice, discountPrice, isOverlay } = props
+  const navigate = useNavigate()
   const { addToCart } = useContext(CartContext) as any
   const handleAddToCart = (cartItem: any) => {
     addToCart(cartItem)
   }
   return (
-    <>
+    <div onClick={() => navigate(`/product/detail/${id}`)}>
       {isOverlay && (
         <>
           <div className="z-50 absolute left-48 top-5 " >
@@ -35,7 +37,8 @@ const ListItemCardContent: React.FC<IListItemCardContent> = (props) => {
             width="160px"
             height="34px"
             className="z-50 absolute top-32 left-9 font-poppins" 
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               handleAddToCart({
                 id,
                 name,
@@ -75,7 +78,7 @@ const ListItemCardContent: React.FC<IListItemCardContent> = (props) => {
         <span className="text-sm line-through">THB{originPrice}</span>
         <span className="text-lg font-semibold">THB{discountPrice}</span>
       </div>
-    </>
+    </div>
   )
 }
 

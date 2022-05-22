@@ -17,7 +17,6 @@ const OrderSummaryStyled = styled.div`
 const OrderSummary: React.FC = () => {
   const navigate = useNavigate()
   const [totalPrice, setTotalPrice] = useState(0)
-  const [totalShippingCost, setTotalShippingCost] = useState(0)
   const { cart, shippingPrice } = useContext(CartContext) as any
 
   useEffect(() => {
@@ -30,12 +29,6 @@ const OrderSummary: React.FC = () => {
     }, 0)
     setTotalPrice(total)
   }, [cart])
-
-  useEffect(() => {
-    if (shippingPrice.price) {
-      setTotalShippingCost(shippingPrice.price)
-    }
-  }, [shippingPrice.price])
 
   return (
     <OrderSummaryStyled className="font-kanit">
@@ -50,14 +43,14 @@ const OrderSummary: React.FC = () => {
         </div>
         <div className="flex justify-between">
           <span>ค่าส่ง</span>
-          <span>THB{totalShippingCost}.00</span>
+          <span>THB{shippingPrice.price}.00</span>
         </div>
       </div>
       <hr className="ml-6 mr-6 mb-6 mt-6" />
       <div className="ml-6 mr-6 font-semibold mb-6">
         <div className="flex justify-between mb-4">
           <span>ยอดรวม</span>
-          <span>THB{totalPrice + totalShippingCost}.00</span>
+          <span>THB{totalPrice + shippingPrice.price}.00</span>
         </div>
       </div>
       <div className="ml-6 mr-6 pb-10">

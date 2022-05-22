@@ -9,8 +9,9 @@ const PreviewProduct: React.FC<IPreviewProductProps> = (props) => {
   const { images } = props
   const [mainImage, setMainImages] = useState(images[0])
   const renderPreviewImage = () => {
-    return images.map(image => (
+    return images.map((image: any, index: number) => (
       <img 
+        key={index}
         src={image} 
         alt="Preview" 
         width="127px" 

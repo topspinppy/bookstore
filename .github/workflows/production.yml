@@ -1,0 +1,44 @@
+name: build
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 14.14
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.14'
+    - name: Publish to Github Packages Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      env:
+        GITHUB_USERNAME: topspinppy
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: topspinppy/bookstore/bookstore
+        registry: docker.pkg.github.com
+        username: topspinppy
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: Dockerfile
+        tags: latest
+    - name: Deploy package to topspinppy production server
+      uses: appleboy/ssh-action@master
+      env:
+          GITHUB_USERNAME: topspinppy
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        envs: GITHUB_USERNAME, GITHUB_TOKEN
+        script: |
+          docker stop $(docker ps -aqf "ancestor=docker.pkg.github.com/topspinppy/bookstore/bookstore:latest")
+          docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+          docker pull docker.pkg.github.com/topspinppy/bookstore/bookstore:latest
+          docker run -dit -p 6666:3000 docker.pkg.github.com/topspinppy/bookstore/bookstore:latest

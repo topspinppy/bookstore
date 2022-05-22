@@ -1,25 +1,26 @@
-import Tabs, { TabPane } from 'rc-tabs'
+import { Tabs } from "antd"
+const { TabPane } = Tabs
 
 interface ITabsProps {
   children?: React.ReactNode
 }
 
 const Tab: React.FC<ITabsProps> = () => {
+
+  const onChange = (key: string) => {
+    console.log(key);
+  };
+  
   return (
-    <Tabs onChange={() => {}}>
-      <TabPane tab="tab 1" key="1">
-        first
+    <Tabs defaultActiveKey="1" onChange={onChange} className="font-kanit">
+      <TabPane tab="1" key="1">
+        Content of Tab Pane 1
       </TabPane>
-      <TabPane tab="tab 2" key="2">
-        second
-      </TabPane>
-      <TabPane tab="tab 3" key="3">
-        third
+      <TabPane tab="2" key="2">
+        Content of Tab Pane 2
       </TabPane>
     </Tabs>
   )
 }
-
-
 
 export default Tab
