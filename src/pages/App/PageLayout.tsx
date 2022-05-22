@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Badge } from 'antd'
 import { Popover } from 'antd'
 import styled from '@emotion/styled'
@@ -7,6 +7,7 @@ import BookLogo from '../../assets/logo/BookLogo'
 import { Button } from '../../components'
 import { useNavigate } from 'react-router-dom'
 import CartPopover from './CartPopover'
+import { CartContext } from '../../context/cartContext'
 
 interface IPageLayoutProps {
   children: React.ReactNode
@@ -55,6 +56,8 @@ const PageContent = styled.div`
 const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
   const { children } = props
   const navigate = useNavigate()
+  const { cart: carts } = useContext(CartContext) as any
+
   const Menu = () => {
     return (
       <MenuStyled className="font-kanit">
@@ -74,7 +77,7 @@ const PageLayout: React.FC<IPageLayoutProps> = (props): React.ReactElement => {
         <div className="mr-5">
           <MagnifierIcon />
         </div>
-        <Badge count="1"  size="small" color="geekblue">
+        <Badge count={carts.length ?? 0}  size="small" color="geekblue">
           <PopOverStyled content={<CartPopover />} trigger="click" placement="bottomRight">
             <Button varient="link">
               <CartIcon />

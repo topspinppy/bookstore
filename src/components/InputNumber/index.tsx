@@ -4,6 +4,7 @@ import { useRef } from "react"
 interface IInputNumberProps extends React.HTMLProps<HTMLInputElement> {
   width?: string,
   height?: string,
+  defaultValue?: number
 }
 
 const ContainerInputNumberStyled = styled.div<{
@@ -41,11 +42,11 @@ const ContainerInputNumberStyled = styled.div<{
   }
 `
 
-const InputNumber: React.FC<IInputNumberProps> = ({ ...props }) => {
+const InputNumber: React.FC<IInputNumberProps> = ({ defaultValue = 1, ...props }) => {
   const inputNumberRef = useRef() as React.MutableRefObject<HTMLInputElement>
   return (
     <ContainerInputNumberStyled width={props.width} height={props.height}>
-      <input type="number" min="1" defaultValue={1} ref={inputNumberRef} {...props} />
+      <input type="number" min="1" defaultValue={defaultValue} ref={inputNumberRef} {...props} />
     </ContainerInputNumberStyled>
   )
 }

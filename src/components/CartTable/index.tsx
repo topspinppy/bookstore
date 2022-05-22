@@ -5,11 +5,10 @@ import { EditIcon, RemoveIcon } from "../../assets/icon"
 import InputNumber from "../InputNumber"
 
 const ContainerStyled = styled.div`
-
   table {
     width: 95%;
     border-spacing: 0;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #cccccc;
     margin-top: 29px;
     margin-right: 54px;
     tr {
@@ -34,7 +33,7 @@ const ContainerStyled = styled.div`
     td {
       text-align: left;
       margin: 0;
-      border-bottom: 1px solid #CCCCCC;
+      border-bottom: 1px solid #cccccc;
 
       :last-child {
         border-right: 0;
@@ -78,7 +77,12 @@ function TableContainer({ columns, data }) {
   )
 }
 
-const Table: React.FC = () => {
+interface CartTableProps {
+  cart: any
+  onChangeCart?(qty: any, value: any): any
+}
+
+const Table: React.FC<CartTableProps> = ({ cart, onChangeCart }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -99,12 +103,18 @@ const Table: React.FC = () => {
       },
       {
         Header: "จำนวน",
-        accessor: "total",
-        Cell: () => {
+        accessor: "quantity",
+        Cell: ({ value, row }: any) => {
           return (
-            <InputNumber />
+            <InputNumber
+              defaultValue={value}
+              onChange={(e) => {
+                const number = e.currentTarget.value
+                onChangeCart && onChangeCart(number, row.original)
+              }}
+            />
           )
-        }
+        },
       },
       {
         Header: "ยอดรวม",
@@ -112,44 +122,36 @@ const Table: React.FC = () => {
         Cell: ({ value }: any) => {
           return (
             <div className="flex">
-              <div className="flex-auto w-20">
-                {value}
-              </div>
+              <div className="flex-auto w-20">{value}</div>
               <div>
                 <EditIcon />
                 <RemoveIcon />
               </div>
             </div>
           )
-        }
+        },
       },
     ],
-    []
+    [onChangeCart]
   )
 
   const data = React.useMemo(
-    () => [
-      {
+    () =>
+      cart.map((val: any) => ({
+        id: val.id,
         product: {
-          name: "รสชาติของผลไม้ที่ยังไม่สุกงอม",
-          pic: require('../../assets/images/book.png'),
+          name: val.name,
+          pic: val.image,
         },
-        price: "THB499.00",
-        total: "",
-        priceTotal: "THB499.00",
-      },
-      {
-        product: {
-          name: "รสชาติของผลไม้ที่ยังไม่สุกงอม",
-          pic: require('../../assets/images/book.png'),
-        },
-        price: "THB499.00",
-        total: "",
-        priceTotal: "THB499.00",
-      },
-    ],
-    []
+        price: val.discountPrice ? val.discountPrice : val.originPrice,
+        quantity: val.quantity,
+        priceTotal: val.discountPrice
+          ? val.quantity * Number(val.discountPrice)
+          : val.quantity * Number(val.originPrice),
+      })),
+    [cart]
   )
+
   return (
     <ContainerStyled className="font-kanit">
       <TableContainer columns={columns} data={data} />

@@ -1,14 +1,10 @@
-import React from "react"
-import { useRecoilValue } from "recoil"
-
+import React, { useContext } from "react"
 import { Card } from "../../components"
 import ListItem from "../../components/ListItem"
-import { mockProductState } from "../../recoil/atoms/mockProductState"
+import { CartContext } from "../../context/cartContext"
 
 const MainPage: React.FC = (): React.ReactElement => {
-  const mockProduct = useRecoilValue(mockProductState)
-
-  console.log(mockProduct)
+  const { product } = useContext(CartContext) as any
   return (
     <div>
       <div
@@ -22,7 +18,7 @@ const MainPage: React.FC = (): React.ReactElement => {
           title="สินค้าขายดี"
           children={
             <ListItem
-              items={mockProduct}
+              items={product || []}
             />
           }
         />
@@ -32,7 +28,7 @@ const MainPage: React.FC = (): React.ReactElement => {
           title="สินค้าแนะนำ"
           children={
             <ListItem
-              items={mockProduct}
+              items={product || []}
             />
           }
         />

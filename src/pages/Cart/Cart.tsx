@@ -1,16 +1,21 @@
-import React from "react"
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button, CartTable } from "../../components"
-import OrderSummary from "./OrderSummary";
+import { CartContext } from "../../context/cartContext"
+import OrderSummary from "./OrderSummary"
 
 const Cart: React.FC = (): React.ReactElement => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { cart, addAdditionCart } = useContext(CartContext) as any
   return (
     <div>
       <p className="font-kanit mt-14 font-semibold text-3xl">ตระกร้าสินค้า</p>
       <div className="flex">
         <div className="flex-auto w-4/6">
-          <CartTable />
+          <CartTable
+            cart={cart}
+            onChangeCart={(total, value) => addAdditionCart({ total, value })}
+          />
           <div className="mt-6 flex">
             <Button
               varient="outline"
@@ -18,7 +23,7 @@ const Cart: React.FC = (): React.ReactElement => {
               width="200px"
               height="37px"
               dark
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
             >
               ซื้อสินค้าต่อไป
             </Button>

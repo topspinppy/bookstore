@@ -1,53 +1,28 @@
 import styled from "@emotion/styled"
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { EditIcon, RemoveIcon } from "../../assets/icon"
 import { Button } from "../../components"
+import { CartContext } from "../../context/cartContext"
 
 const CartPopoverStyled = styled.div`
   width: 310px;
   height: auto;
 `
-const cartsMock = [
-  {
-    product: {
-      name: "รสชาติของผลไม้ที่ยังไม่สุกงอม",
-      pic: require("../../assets/images/book.png"),
-    },
-    price: "THB499.00",
-    total: "2",
-    priceTotal: "THB499.00",
-  },
-  {
-    product: {
-      name: "รสชาติของผลไม้ที่ยังไม่สุกงอม",
-      pic: require("../../assets/images/book.png"),
-    },
-    price: "THB499.00",
-    total: "2",
-    priceTotal: "THB499.00",
-  },
-  {
-    product: {
-      name: "รสชาติของผลไม้ที่ยังไม่สุกงอม",
-      pic: require("../../assets/images/book.png"),
-    },
-    price: "THB499.00",
-    total: "2",
-    priceTotal: "THB499.00",
-  },
-]
-
 const CartPopover: React.FC = () => {
   const navigate = useNavigate()
+  const { cart: carts } = useContext(CartContext) as any
+
+
   const productList = () => {
-    return cartsMock.map((cart) => (
-      <div className="flex justify-between items-center pl-6 pr-6 pt-4 pb-5">
-        <div className="text-lg font-poppins ">{cart.total}x</div>
+    return carts.map((cart: any, index: number) => (
+      <div className="flex justify-between items-center pl-6 pr-6 pt-4 pb-5" key={index}>
+        <div className="text-lg font-poppins ">{cart?.quantity}x</div>
         <div className="flex">
           <div>
-            <img src={cart.product.pic} width="65px" height="65px" alt="" />
+            <img src={cart.image} width="65px" height="65px" alt="" />
           </div>
-          <div>{cart.product.name}</div>
+          <div>{cart.name}</div>
         </div>
         <div className="flex flex-col">
           <Button varient="link">
@@ -61,13 +36,14 @@ const CartPopover: React.FC = () => {
       </div>
     ))
   }
+
   return (
     <CartPopoverStyled className="font-kanit">
       <p className="font-kanit text-lg font-semibold text-center mt-6">
         ตระกร้าของฉัน
       </p>
       <span className="font-kanit mt-1 flex justify-center text-xs text-slate-400">
-        2 สินค้าในตระกร้า
+        {carts.length} สินค้าในตระกร้า
       </span>
       <div className="ml-8 mr-8">
         <Button
