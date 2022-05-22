@@ -51,7 +51,7 @@ const OrderSummary: React.FC = () => {
       <div className="ml-6 mr-6 font-semibold mb-6">
         <div className="flex justify-between mb-4">
           <span>ยอดรวม</span>
-          <span>THB{(totalPrice + shippingPrice.price) || 0}.00</span>
+          <span>THB{(totalPrice + shippingPrice?.price) || 0}.00</span>
         </div>
       </div>
       <div className="ml-6 mr-6 pb-10 text-base font-bold">
