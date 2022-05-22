@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { CheckIcon, DescriptionIcon, FavoriteIcon } from "../../assets/icon"
+import { CartIcon, CheckIcon, DescriptionIcon, FavoriteIcon } from "../../assets/icon"
 import { CartContext } from "../../context/cartContext"
 import Button from "../Button"
 import Rateing from "../Rateing"
@@ -48,7 +48,10 @@ const ListItemCardContent: React.FC<IListItemCardContent> = (props) => {
               })
             }}
           >
+            <div className="flex items-center justify-center">
+            <CartIcon color="#0156FF" />
             Add To Card
+            </div>
           </Button>
         </>
       )}
