@@ -21,6 +21,11 @@ const MainPage: React.FC = (): React.ReactElement => {
               items={product || []}
             />
           }
+          extra={
+            <span className="font-kanit underline font-normal text-sm flex justify-end">
+              ดูสินค้าขายดีทั้งหมด
+            </span>
+          }
         />
       </div>
       <div>
@@ -30,6 +35,11 @@ const MainPage: React.FC = (): React.ReactElement => {
             <ListItem
               items={product || []}
             />
+          }
+          extra={
+            <span className="font-kanit underline font-normal text-sm flex justify-end">
+              ดูสินค้าแนะนำทั้งหมด
+            </span>
           }
         />
       </div>

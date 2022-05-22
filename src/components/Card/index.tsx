@@ -20,7 +20,7 @@ const Card: React.FC<ICardProps> = (props): React.ReactElement => {
         >
           {title}
         </div>
-        <div>{extra}</div>
+        <div className="w-40">{extra}</div>
       </div>
       <div className="mb-10">
         {children}
