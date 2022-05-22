@@ -44,7 +44,7 @@ const OrderSummary: React.FC = () => {
         </div>
         <div className="flex justify-between">
           <span>ค่าส่ง</span>
-          <span>THB{shippingPrice.price || 0}.00</span>
+          <span>THB{shippingPrice?.price || 0}.00</span>
         </div>
       </div>
       <hr className="ml-6 mr-6 mb-6 mt-6" />
